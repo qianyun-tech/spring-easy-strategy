@@ -24,8 +24,7 @@ import static org.springframework.core.annotation.AnnotationUtils.getAnnotation;
 /**
  * @author shengchaojie
  * @date 2020/11/20
- **/
-@SuppressWarnings("unchecked")
+ */
 public class StrategyAnnotationBeanPostProcessor
         extends InstantiationAwareBeanPostProcessorAdapter
         implements MergedBeanDefinitionPostProcessor, PriorityOrdered, ApplicationContextAware {
