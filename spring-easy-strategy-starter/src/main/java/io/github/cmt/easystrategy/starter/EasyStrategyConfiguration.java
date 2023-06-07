@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class EasyStrategyConfiguration {
 
     @Bean
-    public StrategyAnnotationBeanPostProcessor strategyAnnotationBeanPostProcessor(){
+    public StrategyAnnotationBeanPostProcessor strategyAnnotationBeanPostProcessor() {
         return new StrategyAnnotationBeanPostProcessor();
     }
 

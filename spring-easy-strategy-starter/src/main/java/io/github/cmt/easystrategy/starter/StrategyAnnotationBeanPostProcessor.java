@@ -6,7 +6,8 @@ import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.InjectionMetadata;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
-import org.springframework.beans.factory.support.*;
+import org.springframework.beans.factory.support.MergedBeanDefinitionPostProcessor;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.PriorityOrdered;
@@ -24,7 +25,9 @@ import static org.springframework.core.annotation.AnnotationUtils.getAnnotation;
  * @author shengchaojie
  * @date 2020/11/20
  **/
-public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanPostProcessorAdapter
+@SuppressWarnings("unchecked")
+public class StrategyAnnotationBeanPostProcessor
+        extends InstantiationAwareBeanPostProcessorAdapter
         implements MergedBeanDefinitionPostProcessor, PriorityOrdered, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -32,13 +35,17 @@ public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanP
     private static final Map<StrategyCacheKey, Object> CACHE = new HashMap<>();
 
     @Override
-    public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class<?> beanType, String beanName) {
+    public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition,
+                                                Class<?> beanType,
+                                                String beanName) {
 
     }
 
     @Override
-    public PropertyValues postProcessPropertyValues(PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName) throws BeansException {
-
+    public PropertyValues postProcessPropertyValues(PropertyValues pvs,
+                                                    PropertyDescriptor[] pds,
+                                                    Object bean,
+                                                    String beanName) throws BeansException {
         InjectionMetadata metadata = findStrategyMetadata(bean.getClass());
         try {
             metadata.inject(bean, beanName, pvs);
@@ -63,24 +70,15 @@ public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanP
     private InjectionMetadata findStrategyMetadata(final Class<?> beanClass) {
         List<InjectionMetadata.InjectedElement> elements = new ArrayList<>();
 
-        ReflectionUtils.doWithFields(beanClass, new ReflectionUtils.FieldCallback() {
-            @Override
-            public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
-
-                EasyStrategy reference = getAnnotation(field, EasyStrategy.class);
-
-                if (reference != null) {
-
-                    if (Modifier.isStatic(field.getModifiers())) {
-                        return;
-                    }
-
-                    elements.add(new StrategyFieldElement(field, reference, applicationContext));
+        ReflectionUtils.doWithFields(beanClass, field -> {
+            EasyStrategy reference = getAnnotation(field, EasyStrategy.class);
+            if (reference != null) {
+                if (Modifier.isStatic(field.getModifiers())) {
+                    return;
                 }
-
+                elements.add(new StrategyFieldElement(field, reference, applicationContext));
             }
         });
-
         return new InjectionMetadata(beanClass, elements);
     }
 
@@ -92,7 +90,9 @@ public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanP
 
         private final ApplicationContext applicationContext;
 
-        protected StrategyFieldElement(Field member, EasyStrategy easyStrategy, ApplicationContext applicationContext) {
+        protected StrategyFieldElement(Field member,
+                                       EasyStrategy easyStrategy,
+                                       ApplicationContext applicationContext) {
             super(member, null);
             this.field = member;
             this.easyStrategy = easyStrategy;
@@ -100,7 +100,9 @@ public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanP
         }
 
         @Override
-        protected void inject(Object target, String requestingBeanName, PropertyValues pvs) throws Throwable {
+        protected void inject(Object target,
+                              String requestingBeanName,
+                              PropertyValues pvs) throws Throwable {
             ResolvableType resolvableType = ResolvableType.forField(field);
             Class<?> strategyClass = null;
             if (ResolvableType.forClass(StrategyContainer.class).isAssignableFrom(resolvableType)) {
@@ -115,7 +117,7 @@ public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanP
             StrategyCacheKey strategyCacheKey = new StrategyCacheKey(resolvableType.getRawClass(), strategyClass);
             Object container = CACHE.get(strategyCacheKey);
             if (Objects.isNull(container)) {
-                NormalStrategyContainerFactoryBean normalStrategyContainerFactoryBean = new NormalStrategyContainerFactoryBean(strategyClass);
+                NormalStrategyContainerFactoryBean<?> normalStrategyContainerFactoryBean = new NormalStrategyContainerFactoryBean<>(strategyClass);
                 normalStrategyContainerFactoryBean.setApplicationContext(applicationContext);
                 container = normalStrategyContainerFactoryBean.getObject();
                 CACHE.put(strategyCacheKey, container);
@@ -127,9 +129,9 @@ public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanP
 
     private static class StrategyCacheKey {
 
-        private Class<?> containerClass;
+        private final Class<?> containerClass;
 
-        private Class<?> strategyClass;
+        private final Class<?> strategyClass;
 
         public StrategyCacheKey(Class<?> containerClass, Class<?> strategyClass) {
             this.containerClass = containerClass;
@@ -141,7 +143,8 @@ public class StrategyAnnotationBeanPostProcessor extends InstantiationAwareBeanP
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             StrategyCacheKey that = (StrategyCacheKey) o;
-            return Objects.equals(containerClass, that.containerClass) && Objects.equals(strategyClass, that.strategyClass);
+            return Objects.equals(containerClass, that.containerClass)
+                    && Objects.equals(strategyClass, that.strategyClass);
         }
 
         @Override

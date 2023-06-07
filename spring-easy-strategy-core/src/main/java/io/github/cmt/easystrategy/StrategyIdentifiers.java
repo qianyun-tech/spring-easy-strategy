@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * 用来解决有时候不同策略对应相同逻辑的情况
+ *
  * @author shengchaojie
  * @date 2019-09-10
  **/

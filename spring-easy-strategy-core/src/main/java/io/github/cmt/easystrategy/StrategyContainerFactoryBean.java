@@ -1,7 +1,7 @@
 package io.github.cmt.easystrategy;
 
-import io.github.cmt.easystrategy.exceptions.StrategyException;
 import com.google.common.collect.Lists;
+import io.github.cmt.easystrategy.exceptions.StrategyException;
 import lombok.Setter;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
@@ -23,7 +23,8 @@ import java.util.function.Function;
  * @author shengchaojie
  * @date 2019-07-30
  **/
-public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements FactoryBean<StrategyContainer<R, T>>, ApplicationContextAware {
+public class StrategyContainerFactoryBean<T, V extends Annotation, R>
+        implements FactoryBean<StrategyContainer<R, T>>, ApplicationContextAware {
 
     @Setter
     protected Class<T> strategyClass;
@@ -41,13 +42,17 @@ public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements
     public StrategyContainerFactoryBean() {
     }
 
-    public StrategyContainerFactoryBean(Class<T> strategyClass, Class<V> strategyAnnotationClass, Function<V, R> identifierGetter) {
+    public StrategyContainerFactoryBean(Class<T> strategyClass,
+                                        Class<V> strategyAnnotationClass,
+                                        Function<V, R> identifierGetter) {
         this.strategyClass = strategyClass;
         this.strategyAnnotationClass = strategyAnnotationClass;
         this.identifierGetter = identifierGetter;
     }
 
-    public static <T, V extends Annotation, R> StrategyContainerFactoryBean<T, V, R> build(Class<T> strategyClass, Class<V> strategyAnnotationClass, Function<V, R> identifyGetter) {
+    public static <T, V extends Annotation, R> StrategyContainerFactoryBean<T, V, R> build(Class<T> strategyClass,
+                                                                                           Class<V> strategyAnnotationClass,
+                                                                                           Function<V, R> identifyGetter) {
         StrategyContainerFactoryBean<T, V, R> factoryBean = new StrategyContainerFactoryBean<>();
         factoryBean.setStrategyClass(strategyClass);
         factoryBean.setStrategyAnnotationClass(strategyAnnotationClass);
@@ -76,14 +81,15 @@ public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements
 
     /**
      * 抽象通过identify获取策略逻辑
-     *
+     * <p>
      * 如果有自定义获取逻辑
      * 可以进行重载
      * 比如类似cola extension的逻辑
-     * @param identify
-     * @return
+     *
+     * @param identify /
+     * @return /
      */
-    protected T getStrategyFromContainer(R identify){
+    protected T getStrategyFromContainer(R identify) {
         return Optional.ofNullable(strategyTable.get(identify)).orElse(defaultStrategy);
     }
 

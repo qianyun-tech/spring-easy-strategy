@@ -8,10 +8,11 @@ import org.springframework.util.Assert;
  * @author shengchaojie
  * @date 2020/11/21
  **/
-public class NormalStrategyContainerFactoryBean<T> extends StrategyContainerFactoryBean<T, StrategyIdentifier, String> {
+public class NormalStrategyContainerFactoryBean<T>
+        extends StrategyContainerFactoryBean<T, StrategyIdentifier, String> {
 
     public NormalStrategyContainerFactoryBean(Class<T> strategyClass) {
-        super(strategyClass,StrategyIdentifier.class, StrategyIdentifier::identifyCode);
+        super(strategyClass, StrategyIdentifier.class, StrategyIdentifier::identifyCode);
     }
 
 

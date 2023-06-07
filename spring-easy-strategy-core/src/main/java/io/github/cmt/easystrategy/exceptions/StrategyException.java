@@ -4,7 +4,7 @@ package io.github.cmt.easystrategy.exceptions;
  * @author shengchaojie
  * @date 2019-09-10
  **/
-public class StrategyException extends RuntimeException{
+public class StrategyException extends RuntimeException {
 
     public StrategyException() {
     }

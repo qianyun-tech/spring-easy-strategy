@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
  * 默认策略实现
  * 匹配不到策略时，默认走该注解的策略
  * 统一接口策略下,该注解只能有一个
+ *
  * @author shengchaojie
  * @date 2019-09-10
  **/
