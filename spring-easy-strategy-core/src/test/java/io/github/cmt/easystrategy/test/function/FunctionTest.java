@@ -1,5 +1,6 @@
 package io.github.cmt.easystrategy.test.function;
 
+import com.google.common.base.Joiner;
 import io.github.cmt.easystrategy.MultiStrategyContainer;
 import io.github.cmt.easystrategy.StrategyContainer;
 import io.github.cmt.easystrategy.StrategyContainerFactoryBean;
@@ -8,11 +9,10 @@ import io.github.cmt.easystrategy.test.function.common.GenderEnum;
 import io.github.cmt.easystrategy.test.function.common.HelloStrategy;
 import io.github.cmt.easystrategy.test.function.common.PlatformEnum;
 import io.github.cmt.easystrategy.test.function.common.PlatformStrategy;
+import io.github.cmt.easystrategy.test.function.multi.*;
 import io.github.cmt.easystrategy.test.function.repeatable.One;
 import io.github.cmt.easystrategy.test.function.repeatable.RepeatableStrategy;
 import io.github.cmt.easystrategy.test.function.repeatable.RepeatableStrategy1;
-import com.google.common.base.Joiner;
-import io.github.cmt.easystrategy.test.function.multi.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

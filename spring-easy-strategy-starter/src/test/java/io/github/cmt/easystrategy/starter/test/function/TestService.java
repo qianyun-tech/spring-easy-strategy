@@ -24,19 +24,19 @@ public class TestService {
     StrategyContainer<StrategyI> strategyContainerSample;
 
     @EasyStrategy
-    io.github.cmt.easystrategy.StrategyContainer<String,StrategyI> strategyContainer2;
+    io.github.cmt.easystrategy.StrategyContainer<String, StrategyI> strategyContainer2;
 
     @Test
-    public void testCache(){
-        Assert.assertEquals(strategyContainer,strategyContainerSample);
+    public void testCache() {
+        Assert.assertEquals(strategyContainer, strategyContainerSample);
     }
 
     @Test
-    public void test111(){
-        Assert.assertEquals(strategyContainer.getStrategy("A").test(),"A");
-        Assert.assertEquals(strategyContainer.getStrategy("B").test(),"B");
-        Assert.assertEquals(strategyContainer2.getStrategy("B").test(),"B");
-        Assert.assertEquals(strategyContainer2.getStrategy("B").test(),"B");
+    public void test111() {
+        Assert.assertEquals(strategyContainer.getStrategy("A").test(), "A");
+        Assert.assertEquals(strategyContainer.getStrategy("B").test(), "B");
+        Assert.assertEquals(strategyContainer2.getStrategy("B").test(), "B");
+        Assert.assertEquals(strategyContainer2.getStrategy("B").test(), "B");
     }
 
 }

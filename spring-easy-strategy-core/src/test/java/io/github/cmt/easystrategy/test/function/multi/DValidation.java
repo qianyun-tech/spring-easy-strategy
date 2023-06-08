@@ -10,7 +10,7 @@ import org.springframework.core.annotation.Order;
 @StrategyIdentifier(identifyCode = "2")
 @StrategyIdentifier(identifyCode = "3")
 @Order(1)
-public class DValidation implements Validation{
+public class DValidation implements Validation {
     @Override
     public void validate() {
         System.out.println("DDDDD");

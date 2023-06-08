@@ -5,5 +5,5 @@ package io.github.cmt.easystrategy.test.demo;
  * @date 2019-07-30
  **/
 public enum ProductTypeEnum {
-    FRUIT,VEGETABLE
+    FRUIT, VEGETABLE
 }

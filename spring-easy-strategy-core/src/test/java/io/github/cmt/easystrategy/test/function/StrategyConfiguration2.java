@@ -44,7 +44,7 @@ public class StrategyConfiguration2 {
     }
 
     @Bean
-    public MultiStrategyContainerFactoryBean<String,Validation, StrategyIdentifier> validation() {
+    public MultiStrategyContainerFactoryBean<String, Validation, StrategyIdentifier> validation() {
         return MultiStrategyContainerFactoryBean.build(Validation.class, StrategyIdentifier.class, a -> a.identifyCode());
     }
 

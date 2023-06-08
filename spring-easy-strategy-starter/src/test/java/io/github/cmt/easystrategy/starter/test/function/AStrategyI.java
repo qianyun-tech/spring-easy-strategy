@@ -7,7 +7,7 @@ import io.github.cmt.easystrategy.StrategyIdentifier;
  * @date 2020/12/6
  **/
 @StrategyIdentifier(identifyCode = "A")
-public class AStrategyI implements StrategyI{
+public class AStrategyI implements StrategyI {
     @Override
     public String test() {
         System.out.println("A");

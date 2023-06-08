@@ -20,28 +20,27 @@ public class StrategyTest {
     private OrderService orderService;
 
     @Test
-    public void testAssembleStrategy(){
+    public void testAssembleStrategy() {
         orderService.createOrder(CreateOrderRequest.builder()
-                .sku("F1233")
-                .num(3)
-                .userId(1234L)
-                .userLevel(UserLevel.MEDIUM)
-                .build());
+                                         .sku("F1233")
+                                         .num(3)
+                                         .userId(1234L)
+                                         .userLevel(UserLevel.MEDIUM)
+                                         .build());
 
         orderService.createOrder(CreateOrderRequest.builder()
-                .sku("F1233")
-                .num(3)
-                .userId(1234L)
-                .userLevel(UserLevel.HIGH)
-                .build());
+                                         .sku("F1233")
+                                         .num(3)
+                                         .userId(1234L)
+                                         .userLevel(UserLevel.HIGH)
+                                         .build());
 
         orderService.createOrder(CreateOrderRequest.builder()
-                .sku("V1233")
-                .num(3)
-                .userId(1234L)
-                .userLevel(UserLevel.HIGH)
-                .build());
+                                         .sku("V1233")
+                                         .num(3)
+                                         .userId(1234L)
+                                         .userLevel(UserLevel.HIGH)
+                                         .build());
     }
-
 
 }

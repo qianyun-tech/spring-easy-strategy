@@ -11,7 +11,7 @@ import org.springframework.core.annotation.Order;
 @StrategyIdentifier(identifyCode = "2")
 @StrategyIdentifier(identifyCode = "3")
 @Order(-1)
-public class CValidation implements Validation , Ordered {
+public class CValidation implements Validation, Ordered {
     @Override
     public void validate() {
         System.out.println("CCCCC");

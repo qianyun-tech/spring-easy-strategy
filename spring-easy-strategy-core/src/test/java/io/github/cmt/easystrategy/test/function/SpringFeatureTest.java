@@ -42,11 +42,11 @@ public class SpringFeatureTest {
 
         HelloStrategy helloStrategy = (HelloStrategy) defaultAopProxyFactory.createAopProxy(advisedSupport).getProxy();
         Assert.assertTrue(AopUtils.isAopProxy(helloStrategy));
-        Assert.assertEquals(AopUtils.getTargetClass(helloStrategy),ChineseGirlHelloStrategy.class);
+        Assert.assertEquals(AopUtils.getTargetClass(helloStrategy), ChineseGirlHelloStrategy.class);
     }
 
     @Test
-    public void testJDKAop(){
+    public void testJDKAop() {
         DefaultAopProxyFactory defaultAopProxyFactory = new DefaultAopProxyFactory();
 
         AdvisedSupport advisedSupport = new AdvisedSupport();
@@ -63,20 +63,20 @@ public class SpringFeatureTest {
 
         HelloStrategy helloStrategy = (HelloStrategy) defaultAopProxyFactory.createAopProxy(advisedSupport).getProxy();
         Assert.assertTrue(AopUtils.isAopProxy(helloStrategy));
-        Assert.assertEquals(AopUtils.getTargetClass(helloStrategy),ChineseGirlHelloStrategy.class);
+        Assert.assertEquals(AopUtils.getTargetClass(helloStrategy), ChineseGirlHelloStrategy.class);
     }
 
     /**
      * AnnotationUtils.getRepeatableAnnotations兼容了Repeatable模式和非Repeatable模式
      */
     @Test
-    public void testSpringAnnotationUtil(){
-        Assert.assertEquals(AnnotationUtils.getRepeatableAnnotations(RepeatableStrategy1.class, One.class).size(),2);
-        Assert.assertTrue(AnnotationUtils.getAnnotation(RepeatableStrategy1.class, One.class)==null);
-        Assert.assertEquals(AnnotationUtils.getRepeatableAnnotations(RepeatableStrategy2.class, One.class).size(),1);
-        Assert.assertTrue(AnnotationUtils.getAnnotation(RepeatableStrategy2.class, One.class)!=null);
+    public void testSpringAnnotationUtil() {
+        Assert.assertEquals(AnnotationUtils.getRepeatableAnnotations(RepeatableStrategy1.class, One.class).size(), 2);
+        Assert.assertTrue(AnnotationUtils.getAnnotation(RepeatableStrategy1.class, One.class) == null);
+        Assert.assertEquals(AnnotationUtils.getRepeatableAnnotations(RepeatableStrategy2.class, One.class).size(), 1);
+        Assert.assertTrue(AnnotationUtils.getAnnotation(RepeatableStrategy2.class, One.class) != null);
 
-        Assert.assertEquals(AnnotationUtils.getRepeatableAnnotations(JapanGirlHelloStrategy.class, People.class).size(),1);
+        Assert.assertEquals(AnnotationUtils.getRepeatableAnnotations(JapanGirlHelloStrategy.class, People.class).size(), 1);
     }
 
 }
